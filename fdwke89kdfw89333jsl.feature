@@ -140,7 +140,7 @@ local httprequest = (syn and syn.request) or (http and http.request) or http_req
 local getassetfunc = getcustomasset or getsynasset
 
 local ThemeManager = {} do
-	ThemeManager.Folder = 'temple software'
+	ThemeManager.Folder = 'xiaohack software'
 	-- if not isfolder(ThemeManager.Folder) then makefolder(ThemeManager.Folder) end
 
 	ThemeManager.Library = nil
@@ -541,14 +541,14 @@ local ThemeManager = {} do
 			if idx:find("Color") then
 				self.Library[idx] = Color3.fromHex(col)
 				
-				if getgenv().Temple.Options[idx] then
-					getgenv().Temple.Options[idx]:SetValueRGB(Color3.fromHex(col))
+				if getgenv().XiaoHack.Options[idx] then
+					getgenv().XiaoHack.Options[idx]:SetValueRGB(Color3.fromHex(col))
 				end
 			else
 				self.Library[idx] = col
 				
-				if getgenv().Temple.Options[idx] then
-					getgenv().Temple.Options[idx]:SetValue(col)
+				if getgenv().XiaoHack.Options[idx] then
+					getgenv().XiaoHack.Options[idx]:SetValue(col)
 				end
 			end
 		end
@@ -564,8 +564,8 @@ local ThemeManager = {} do
 		
 		local options = {"Contrast", "Saturation", "Brightness", "BlurSize", "FontColor", "RiskColor", "MainColor", "AccentColor", "BackgroundColor", "OutlineColor", "SwordColor", "ItemType", "BackTransparency", "BackColor", "SwordTransparency", "SwordReflectance", "SwordMaterial", "SwordSpeed"}
 		for i, field in next, options do
-			if getgenv().Temple.Options and getgenv().Temple.Options[field] then
-				self.Library[field] = getgenv().Temple.Options[field].Value
+			if getgenv().XiaoHack.Options and getgenv().XiaoHack.Options[field] then
+				self.Library[field] = getgenv().XiaoHack.Options[field].Value
 			end
 		end
 
@@ -590,7 +590,7 @@ local ThemeManager = {} do
 		end
 
 		if isDefault then
-			getgenv().Temple.Options.ThemeManager_ThemeList:SetValue(theme)
+			getgenv().XiaoHack.Options.ThemeManager_ThemeList:SetValue(theme)
 		else
 			self:ApplyTheme(theme)
 		end
@@ -675,35 +675,35 @@ local ThemeManager = {} do
 
 		groupbox:AddDropdown('ThemeManager_ThemeList', { Text = 'Theme list', Values = ThemesArray, Default = 1 })
 		groupbox:AddButton('Set Default', function()
-			self:SaveDefault(getgenv().Temple.Options.ThemeManager_ThemeList.Value)
-			self.Library:Notify(string.format('Set default theme to %q', getgenv().Temple.Options.ThemeManager_ThemeList.Value))
+			self:SaveDefault(getgenv().XiaoHack.Options.ThemeManager_ThemeList.Value)
+			self.Library:Notify(string.format('Set default theme to %q', getgenv().XiaoHack.Options.ThemeManager_ThemeList.Value))
 		end)
 
-		getgenv().Temple.Options.ThemeManager_ThemeList:OnChanged(function()
-			self:ApplyTheme(getgenv().Temple.Options.ThemeManager_ThemeList.Value)
+		getgenv().XiaoHack.Options.ThemeManager_ThemeList:OnChanged(function()
+			self:ApplyTheme(getgenv().XiaoHack.Options.ThemeManager_ThemeList.Value)
 		end)
 
 		groupbox:AddDivider()
 
 		groupbox:AddInput('ThemeManager_CustomThemeName', { Text = 'Custom theme name' })
 		groupbox:AddButton('Create theme', function() 
-			self:SaveCustomTheme(getgenv().Temple.Options.ThemeManager_CustomThemeName.Value)
+			self:SaveCustomTheme(getgenv().XiaoHack.Options.ThemeManager_CustomThemeName.Value)
 
-			getgenv().Temple.Options.ThemeManager_CustomThemeList:SetValues(self:ReloadCustomThemes())
-			getgenv().Temple.Options.ThemeManager_CustomThemeList:SetValue(nil)
+			getgenv().XiaoHack.Options.ThemeManager_CustomThemeList:SetValues(self:ReloadCustomThemes())
+			getgenv().XiaoHack.Options.ThemeManager_CustomThemeList:SetValue(nil)
 		end)
 
 		groupbox:AddDivider()
 
 		groupbox:AddDropdown('ThemeManager_CustomThemeList', { Text = 'Custom themes', Values = self:ReloadCustomThemes(), AllowNull = true, Default = 1 })
 		groupbox:AddButton('Load theme', function() 
-			self:ApplyTheme(getgenv().Temple.Options.ThemeManager_CustomThemeList.Value) 
+			self:ApplyTheme(getgenv().XiaoHack.Options.ThemeManager_CustomThemeList.Value) 
 		end)
 
 		groupbox:AddButton('Overwrite Theme', function()
-			self:SaveCustomTheme(getgenv().Temple.Options.ThemeManager_CustomThemeName.Value)
+			self:SaveCustomTheme(getgenv().XiaoHack.Options.ThemeManager_CustomThemeName.Value)
 		end):AddButton('Delete Theme', function()
-			local name = getgenv().Temple.Options.ThemeManager_CustomThemeName.Value
+			local name = getgenv().XiaoHack.Options.ThemeManager_CustomThemeName.Value
 
 			local success, err = self:Delete(name)
 			if not success then
@@ -711,14 +711,14 @@ local ThemeManager = {} do
 			end
 
 			self.Library:Notify(string.format('Deleted theme %q', name))
-			getgenv().Temple.Options.ThemeManager_CustomThemeList:SetValues(self:ReloadCustomThemes())
-			getgenv().Temple.Options.ThemeManager_CustomThemeList:SetValue(nil)
+			getgenv().XiaoHack.Options.ThemeManager_CustomThemeList:SetValues(self:ReloadCustomThemes())
+			getgenv().XiaoHack.Options.ThemeManager_CustomThemeList:SetValue(nil)
 		end)
 
 		groupbox:AddButton('Set Default', function()
-			if getgenv().Temple.Options.ThemeManager_CustomThemeList.Value ~= nil and getgenv().Temple.Options.ThemeManager_CustomThemeList.Value ~= '' then
-				self:SaveDefault(getgenv().Temple.Options.ThemeManager_CustomThemeList.Value)
-				self.Library:Notify(string.format('Set default theme to %q', getgenv().Temple.Options.ThemeManager_CustomThemeList.Value))
+			if getgenv().XiaoHack.Options.ThemeManager_CustomThemeList.Value ~= nil and getgenv().XiaoHack.Options.ThemeManager_CustomThemeList.Value ~= '' then
+				self:SaveDefault(getgenv().XiaoHack.Options.ThemeManager_CustomThemeList.Value)
+				self.Library:Notify(string.format('Set default theme to %q', getgenv().XiaoHack.Options.ThemeManager_CustomThemeList.Value))
 			end
 		end):AddButton('Reset Default', function()
 			local success = pcall(delfile, self.Folder .. '/themes/default.tpl')
@@ -727,13 +727,13 @@ local ThemeManager = {} do
 			end
 				
 			self.Library:Notify('Set default theme to nothing')
-			getgenv().Temple.Options.ThemeManager_CustomThemeList:SetValues(self:ReloadCustomThemes())
-			getgenv().Temple.Options.ThemeManager_CustomThemeList:SetValue(nil)
+			getgenv().XiaoHack.Options.ThemeManager_CustomThemeList:SetValues(self:ReloadCustomThemes())
+			getgenv().XiaoHack.Options.ThemeManager_CustomThemeList:SetValue(nil)
 		end)
 
 		groupbox:AddButton('Refresh', function()
-			getgenv().Temple.Options.ThemeManager_CustomThemeList:SetValues(self:ReloadCustomThemes())
-			getgenv().Temple.Options.ThemeManager_CustomThemeList:SetValue(nil)
+			getgenv().XiaoHack.Options.ThemeManager_CustomThemeList:SetValues(self:ReloadCustomThemes())
+			getgenv().XiaoHack.Options.ThemeManager_CustomThemeList:SetValue(nil)
 		end)
 
 		ThemeManager:LoadDefault()
@@ -742,27 +742,27 @@ local ThemeManager = {} do
 			self:ThemeUpdate()
 		end
 
-		getgenv().Temple.Options.BackgroundColor:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.MainColor:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.AccentColor:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.OutlineColor:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.FontColor:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.RiskColor:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.BackgroundColor:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.MainColor:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.AccentColor:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.OutlineColor:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.FontColor:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.RiskColor:OnChanged(UpdateTheme)
 
-		getgenv().Temple.Options.ItemType:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.SwordColor:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.SwordTransparency:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.SwordReflectance:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.SwordSpeed:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.SwordMaterial:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.ItemType:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.SwordColor:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.SwordTransparency:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.SwordReflectance:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.SwordSpeed:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.SwordMaterial:OnChanged(UpdateTheme)
 
-		getgenv().Temple.Options.BlurSize:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.Contrast:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.Saturation:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.Brightness:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.BlurSize:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.Contrast:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.Saturation:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.Brightness:OnChanged(UpdateTheme)
 
-		getgenv().Temple.Options.BackColor:OnChanged(UpdateTheme)
-		getgenv().Temple.Options.BackTransparency:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.BackColor:OnChanged(UpdateTheme)
+		getgenv().XiaoHack.Options.BackTransparency:OnChanged(UpdateTheme)
 	end
 
 	function ThemeManager:GetCustomTheme(file)
@@ -791,9 +791,9 @@ local ThemeManager = {} do
 
 		for _, field in next, fields do
 			if not field:find("Color") then
-				theme[field] = getgenv().Temple.Options[field].Value
+				theme[field] = getgenv().XiaoHack.Options[field].Value
 			else
-				theme[field] = getgenv().Temple.Options[field].Value:ToHex()
+				theme[field] = getgenv().XiaoHack.Options[field].Value:ToHex()
 			end
 		end
 
