@@ -605,7 +605,7 @@ local ThemeManager = {} do
 			return false, 'no config file is selected'
 		end
 		
-		local file = self.Folder .. '/themes/' .. name .. '.tmpl'
+		local file = self.Folder .. '/themes/' .. name .. '.json'
 		if not isfile(file) then return false, 'invalid file' end
 
 		local success, decoded = pcall(delfile, file)
@@ -797,7 +797,7 @@ local ThemeManager = {} do
 			end
 		end
 
-		writefile(self.Folder .. '/themes/' .. file .. '.tmpl', HttpService:JSONEncode(theme))
+		writefile(self.Folder .. '/themes/' .. file .. '.json', HttpService:JSONEncode(theme))
 	end
 
 	function ThemeManager:ReloadCustomThemes()
@@ -806,10 +806,10 @@ local ThemeManager = {} do
 		local out = {}
 		for i = 1, #list do
 			local file = list[i]
-			if file:sub(-5) == '.tmpl' then
+			if file:sub(-5) == '.json' then
 				-- i hate this but it has to be done ...
 
-				local pos = file:find('.tmpl', 1, true)
+				local pos = file:find('.json', 1, true)
 				local char = file:sub(pos, pos)
 
 				while char ~= '/' and char ~= '\\' and char ~= '' do
